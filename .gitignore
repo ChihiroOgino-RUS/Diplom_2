@@ -4,6 +4,12 @@
 # Воркбенч наставника — локальные заметки и планы
 .workbench/
 
+# Командная строка Allure (скачивается плагином allure-maven)
+.allure/
+
+# Служебный файл Allure с таймстампом — в отчёте не участвует
+scripts/allure-results/allure.properties
+
 # Скомпилированные классы
 *.class
 
