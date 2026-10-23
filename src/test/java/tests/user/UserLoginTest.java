@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.TestDataGenerator;
 
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertEquals;
@@ -40,7 +42,7 @@ public class UserLoginTest {
     public void loginExistingUserTest() {
         Response response = client.loginUser(new UserCredentials(user.getEmail(), user.getPassword()));
 
-        assertEquals(200, response.statusCode());
+        assertEquals(SC_OK, response.statusCode());
         response.then()
                 .body("success", equalTo(true))
                 .body("accessToken", startsWith("Bearer "));
@@ -52,7 +54,7 @@ public class UserLoginTest {
     public void loginWithWrongPasswordTest() {
         Response response = client.loginUser(new UserCredentials(user.getEmail(), "incorrectPassword"));
 
-        assertEquals(401, response.statusCode());
+        assertEquals(SC_UNAUTHORIZED, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
@@ -64,7 +66,7 @@ public class UserLoginTest {
     public void loginWithWrongLoginTest() {
         Response response = client.loginUser(new UserCredentials("incorrectEmail@yandex.ru", user.getPassword()));
 
-        assertEquals(401, response.statusCode());
+        assertEquals(SC_UNAUTHORIZED, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));

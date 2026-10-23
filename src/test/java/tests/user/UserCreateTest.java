@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.TestDataGenerator;
 
+import static org.apache.http.HttpStatus.SC_FORBIDDEN;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
@@ -41,7 +43,7 @@ public class UserCreateTest {
         Response response = client.createUser(user);
         accessToken = response.then().extract().path("accessToken");
 
-        assertEquals(200, response.statusCode());
+        assertEquals(SC_OK, response.statusCode());
         response.then()
                 .body("success", equalTo(true))
                 .body("user.email", equalTo(user.getEmail()))
@@ -58,7 +60,7 @@ public class UserCreateTest {
 
         Response duplicate = client.createUser(user);
 
-        assertEquals(403, duplicate.statusCode());
+        assertEquals(SC_FORBIDDEN, duplicate.statusCode());
         duplicate.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("User already exists"));
@@ -73,7 +75,7 @@ public class UserCreateTest {
 
         Response response = client.createUser(user);
 
-        assertEquals(403, response.statusCode());
+        assertEquals(SC_FORBIDDEN, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
@@ -88,7 +90,7 @@ public class UserCreateTest {
 
         Response response = client.createUser(user);
 
-        assertEquals(403, response.statusCode());
+        assertEquals(SC_FORBIDDEN, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
@@ -103,7 +105,7 @@ public class UserCreateTest {
 
         Response response = client.createUser(user);
 
-        assertEquals(403, response.statusCode());
+        assertEquals(SC_FORBIDDEN, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));

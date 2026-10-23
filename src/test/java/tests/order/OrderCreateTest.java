@@ -12,6 +12,9 @@ import utils.TestDataGenerator;
 
 import java.util.List;
 
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
@@ -45,7 +48,7 @@ public class OrderCreateTest {
     public void createOrderWithAuthAndIngredientsTest() {
         Response response = client.createOrder(accessToken, new OrderRequest(List.of(firstIngredient, secondIngredient)));
 
-        assertEquals(200, response.statusCode());
+        assertEquals(SC_OK, response.statusCode());
         response.then()
                 .body("success", equalTo(true))
                 .body("order.number", notNullValue());
@@ -58,7 +61,7 @@ public class OrderCreateTest {
     public void createOrderWithoutAuthTest() {
         Response response = client.createOrder(null, new OrderRequest(List.of(firstIngredient, secondIngredient)));
 
-        assertEquals(401, response.statusCode());
+        assertEquals(SC_UNAUTHORIZED, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("You should be authorised"));
@@ -70,7 +73,7 @@ public class OrderCreateTest {
     public void createOrderWithoutIngredientsTest() {
         Response response = client.createOrder(accessToken, new OrderRequest(List.of()));
 
-        assertEquals(400, response.statusCode());
+        assertEquals(SC_BAD_REQUEST, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("Ingredient ids must be provided"));
@@ -82,7 +85,7 @@ public class OrderCreateTest {
     public void createOrderWithInvalidIngredientHashTest() {
         Response response = client.createOrder(accessToken, new OrderRequest(List.of("000000000000000000000000", "111111111111111111111111")));
 
-        assertEquals(400, response.statusCode());
+        assertEquals(SC_BAD_REQUEST, response.statusCode());
         response.then()
                 .body("success", equalTo(false))
                 .body("message", equalTo("One or more ids provided are incorrect"));

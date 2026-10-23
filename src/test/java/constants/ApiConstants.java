@@ -9,7 +9,4 @@ public class ApiConstants {
     public static final String ORDERS_URL = BASE_URL + "/api/orders";
     public static final String USER_DELETE_URL = BASE_URL + "/api/auth/user";
     public static final String INGREDIENTS_URL = BASE_URL + "/api/ingredients";
-
-    private ApiConstants() {
-    }
 }
