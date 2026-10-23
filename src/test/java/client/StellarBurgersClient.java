@@ -19,7 +19,7 @@ public class StellarBurgersClient {
                 .header("Content-Type", "application/json")
                 .body(user)
                 .when()
-                .post(ApiConstants.BASE_URL + ApiConstants.USER_REGISTER_PATH);
+                .post(ApiConstants.USER_REGISTER_URL);
     }
 
     @Step("Логин пользователя")
@@ -29,7 +29,7 @@ public class StellarBurgersClient {
                 .header("Content-Type", "application/json")
                 .body(credentials)
                 .when()
-                .post(ApiConstants.BASE_URL + ApiConstants.USER_LOGIN_PATH);
+                .post(ApiConstants.USER_LOGIN_URL);
     }
 
     @Step("Создание заказа")
@@ -42,7 +42,15 @@ public class StellarBurgersClient {
             request.header("Authorization", token);
         }
         return request.when()
-                .post(ApiConstants.BASE_URL + ApiConstants.ORDERS_PATH);
+                .post(ApiConstants.ORDERS_URL);
+    }
+
+    @Step("Получение списка ингредиентов")
+    public Response getIngredients() {
+        return given()
+                .log().all()
+                .when()
+                .get(ApiConstants.INGREDIENTS_URL);
     }
 
     @Step("Удаление пользователя")
@@ -51,6 +59,6 @@ public class StellarBurgersClient {
                 .log().all()
                 .header("Authorization", token)
                 .when()
-                .delete(ApiConstants.BASE_URL + ApiConstants.USER_DELETE_PATH);
+                .delete(ApiConstants.USER_DELETE_URL);
     }
 }

@@ -1,13 +1,15 @@
 package constants;
 
 public class ApiConstants {
-    public static final String BASE_URL = "https://stellarburgers.education-services.ru";
+    public static final String BASE_URL = "https://qa-stellarburgers.education-services.ru";
 
-    public static final String USER_REGISTER_PATH = "/api/auth/register";
+    // Эндпоинты API
+    public static final String USER_REGISTER_URL = BASE_URL + "/api/auth/register";
+    public static final String USER_LOGIN_URL = BASE_URL + "/api/auth/login";
+    public static final String ORDERS_URL = BASE_URL + "/api/orders";
+    public static final String USER_DELETE_URL = BASE_URL + "/api/auth/user";
+    public static final String INGREDIENTS_URL = BASE_URL + "/api/ingredients";
 
-    public static final String USER_LOGIN_PATH = "/api/auth/login";
-
-    public static final String ORDERS_PATH = "/api/orders";
-
-    public static final String USER_DELETE_PATH = "/api/auth/user";
+    private ApiConstants() {
+    }
 }
